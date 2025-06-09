@@ -1,0 +1,33 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image or tag to deploy'
+        required: true
+        default: 'latest'
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options: [staging, production]
+      dry-run:
+        description: 'Simulate without executing'
+        required: false
+        type: boolean
+        default: 'false'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show chosen options
+        run: |
+          echo "🔖 Version:       ${{ inputs.version }}"
+          echo "🌎 Environment:   ${{ inputs.environment }}"
+          echo "🧪 Dry-run mode:  ${{ inputs.dry-run }}"
