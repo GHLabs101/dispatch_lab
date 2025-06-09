@@ -26,8 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show chosen options
-        run: |
-          echo "🔖 Version:       ${{ inputs.version }}"
-          echo "🌎 Environment:   ${{ inputs.environment }}"
-          echo "🧪 Dry-run mode:  ${{ inputs.dry-run }}"
+      - name: Conditionally deploy
+        if: inputs.dry-run == 'false'
+        run: echo "🚀 Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
+
